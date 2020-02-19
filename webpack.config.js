@@ -1,16 +1,23 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const PATH  = {
+    src: path.resolve(__dirname, 'src'),
+    dist: path.resolve(__dirname, 'dist')
+};
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: `${PATH.src}/index.js`,
     mode: "development",
     resolve: {
         extensions: ['.js','.jsx']
     },
     output: {
-        path: path.join(__dirname, "/dist"),
-        filename: "bundle.js"
+        path: PATH.dist,
+        filename: "bundle.js",
+        publicPath: "/"
     },
     module: {
         rules: [
@@ -55,17 +62,17 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /\.(json)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[folder]/[name].[ext]',
+                    }
+                }
+            },
         ]
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: 'React App',
-            template: `./src/index.html`,
-            inject: 'body',
-            alwaysWriteToDisk: true,
-        }),
-        new HtmlWebpackHarddiskPlugin()
-    ],
     devServer: {
         stats: 'errors-only',
         historyApiFallback: true,
@@ -79,4 +86,17 @@ module.exports = {
             }
         }
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: 'React App',
+            template: `${PATH.src}/index.html`,
+            inject: 'body',
+            alwaysWriteToDisk: true,
+        }),
+        new CopyWebpackPlugin([{
+            from: `${PATH.src}/assets`,
+            to:''
+        }]),
+        new HtmlWebpackHarddiskPlugin(),
+    ],
 };

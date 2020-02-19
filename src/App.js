@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Suspense} from 'react'
 import MyRouter from "./router";
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
@@ -8,8 +8,11 @@ class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
+
                 <BrowserRouter>
-                    <MyRouter/>
+                    <Suspense fallback="loading">
+                        <MyRouter/>
+                    </Suspense>
                 </BrowserRouter>
             </Provider>
         )

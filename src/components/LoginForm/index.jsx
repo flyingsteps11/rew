@@ -1,15 +1,17 @@
-import React, {useState} from 'react'
+import React, {Fragment, useState} from 'react'
 import '../../assets/styles/index.css'
 import {useHistory} from 'react-router-dom'
+import LanguageForm from "../LanguageForm";
+import { withTranslation } from "react-i18next";
 
-const LoginForm = ({login}) => {
+const LoginForm = ({login, t, i18n}) => {
     const history = useHistory();
 
 
     const [formValues, setFormValues] = useState({
-        login: '',
-        password: '',
-        language: 'ru'
+        login: null,
+        password: null,
+        language: i18n.language
     });
 
     const onChangeInputHandler = (event) => {
@@ -32,13 +34,15 @@ const LoginForm = ({login}) => {
         <form onSubmit={submitHandler}>
             <div className='login-box'>
                 <h1>TMS Beiersdorf</h1>
+
                 <div className='login'>
                     <i className="fa fa-user" aria-hidden='true'></i>
                     <input
                         id="formLogin"
-                        type="text" name="login"
+                        type="text"
+                        name="login"
                         placeholder="Enter email"
-                        value={formValues.login}
+                        value={t(formValues.login)}
                         onChange={onChangeInputHandler}/>
                 </div>
 
@@ -48,7 +52,7 @@ const LoginForm = ({login}) => {
                         id="formPassword"
                         type="password"
                         name="password"
-                        value={formValues.password}
+                        value={t(formValues.password)}
                         placeholder="Enter password"
                         onChange={onChangeInputHandler}/>
 
@@ -70,4 +74,4 @@ const LoginForm = ({login}) => {
         </form>
     );
 };
-export default LoginForm
+export default withTranslation()(LoginForm)
