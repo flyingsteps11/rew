@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import {Button,Icon,Label,Menu,Table,Checkbox} from 'semantic-ui-react'
+import {Button,Icon,Label,Menu,Table,Checkbox} from 'semantic-ui-react';
+import  "../../assets/styles/index.css"
 
 
 class CustomTable extends Component {
@@ -18,45 +19,7 @@ class CustomTable extends Component {
                         })}
                     </Table.Row>
                 </Table.Header>
-                <Table.Body>
-                    {
 
-                        rows.map(row => {
-                            return (
-                                <Table.Row>{
-                                    columns.map(col => {
-                                        return (
-                                            <> {
-                                                col.key == 'check'? <Table.Cell>
-                                                        <Checkbox
-                                                            checked={selectedRows.has(row.id)}
-                                                            onChange={()=>handleChangeSelectedRows(row.id)}
-                                                        />
-                                                    </Table.Cell>
-                                                    : col.key !== 'action' ? <Table.Cell onClick={(event) => onclickRow(row.id)}>
-                                                        {
-                                                            row[col.key]
-                                                        }
-                                                    </Table.Cell> :
-                                                    <Table.Cell>
-                                                        <div className="buto">
-                                                            <Button>
-                                                                <Icon name="trash alternate" onClick={() => deleteRow(row.id)}/>
-                                                            </Button>
-                                                        </div>
-                                                    </Table.Cell>
-                                            }
-                                            </>
-                                        )
-                                    })}
-                                </Table.Row>
-
-                            )
-                        })
-                    }
-
-
-                </Table.Body>
             </Table>
 
 

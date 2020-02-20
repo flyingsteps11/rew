@@ -1,7 +1,7 @@
 import {call,takeLatest,put} from 'redux-saga/effects'
-import JwtHelper from '../../utils/jwtHelper'
-import UserService from "../../services/UserService";
-import actionTypes from '../../constants/actionTypes'
+import JwtHelper from '../utils/jwtHelper'
+import UserService from "../services/UserService";
+import actionTypes from '../constants/actionTypes'
 import actions from '../actions'
 import 'regenerator-runtime'
 

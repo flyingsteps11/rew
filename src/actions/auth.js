@@ -1,4 +1,4 @@
-import actionTypes from '../../constants/actionTypes';
+import actionTypes from '../constants/actionTypes';
 
 export const LoginSuccess = (payload) => ({
     type: actionTypes.LOGIN_SUCCESS,

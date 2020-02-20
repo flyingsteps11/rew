@@ -1,9 +1,9 @@
 import {createStore,combineReducers,applyMiddleware,compose} from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import rootReducer from './reducers'
+import rootReducer from '../reducers'
 import thunk from 'redux-thunk';
 
-import rootSaga from './sagas';
+import rootSaga from '../sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 

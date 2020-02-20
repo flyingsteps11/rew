@@ -1,5 +1,5 @@
 import React from "react";
-import {Menu} from 'semantic-ui-react'
+import {Menu,Dropdown} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import {ORDERS, REFERENCE, SETTING_FIELDS, TARIFFS, TRANSPORTATION} from "../../router/link";
 
@@ -7,8 +7,11 @@ class Header extends React.Component {
     state={};
 
     handleItemClick = (e, {name}) => this.setState({activeItem: name});
-
+    constructor(props) {
+        super(props);
+    }
     render() {
+        const {t,history, logout, userName} = this. props;
         const {activeItem} = this.state;
         return (
             <>

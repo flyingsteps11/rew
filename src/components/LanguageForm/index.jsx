@@ -4,7 +4,8 @@ import {Dropdown} from "semantic-ui-react"
 const LanguageForm =()=>{
     const {t, i18n}=useTranslation();
     const [lang,setLang] = useState(i18n.language);
-    const changeLanguage =lang=>{
+
+    const changeLanguage = lang =>{
         i18n.changeLanguage(lang);
         setLang(lang)
     };
@@ -17,7 +18,6 @@ const LanguageForm =()=>{
         floating
         labeled
         icon='world'
-        search
         text={"Select Language"}
         />
 
