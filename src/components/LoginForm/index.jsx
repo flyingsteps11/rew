@@ -3,14 +3,11 @@ import '../../assets/styles/index.css'
 import {useHistory} from 'react-router-dom'
 import LanguageForm from "../LanguageForm";
 import {withTranslation} from "react-i18next";
-import ru from "../../images/ru.png";
-import en from "../../images/usa.png";
-import i18next from "i18next";
+
 
 
 const LoginForm = ({login, t, i18n}) => {
     const history = useHistory();
-
 
     const [formValues, setFormValues] = useState({
         login: "",
@@ -28,63 +25,16 @@ const LoginForm = ({login, t, i18n}) => {
 
     };
 
-    function clickDropdown(e) {
-        document.getElementById("dropdown_content").classList.toggle("show");
-    }
-
-    function onBlur(e) {
-        e.preventDefault();
-        let myDropdown = document.getElementById("dropdown_content");
-        if (myDropdown.classList.contains('show')) {
-            myDropdown.classList.remove('show');
-        }
-    }
-
     const submitHandler = event => {
         event.nativeEvent.preventDefault();
         login(formValues, history);
         console.log(formValues)
     };
 
-    function onClickLang(event) {
-        i18n.changeLanguage(event.target.lang);
-        const value = event.target.lang;
-        setFormValues({
-            ...formValues,
-            language: value
-        })
-    }
-
     return (
         <>
             <LanguageForm/>
             <div className="Login">
-                <button className="dropdown_button" onClick={clickDropdown} onBlur={onBlur}>
-                    <div className="dropdown_lang">
-                        {
-                            formValues.language === "ru" ?
-                                <div className="dropdown_content-link">
-                                    <img src={ru} alt="rus"/>
-                                    Русский
-                                </div> :
-                                <div className="dropdown_content-link">
-                                    <img src={en} alt="eng"/>
-                                    English
-                                </div>
-                        }
-                    </div>
-                    <div className="dropdown_content" id="dropdown_content">
-                        <div className="dropdown_content-link" lang="ru" onClick={onClickLang}>
-                            <img src={ru} alt="rus"/>
-                            Русский
-                        </div>
-                        <div className="dropdown_content-link" lang="en" onClick={onClickLang}>
-                            <img src={en} alt="eng"/>
-                            English
-                        </div>
-                    </div>
-                </button>
-
                 <form onSubmit={submitHandler}>
                     <div className='login-box'>
 
