@@ -1,29 +1,48 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Dropdown} from "semantic-ui-react"
-const LanguageForm =()=>{
-    const {t, i18n}=useTranslation();
-    const [lang,setLang] = useState(i18n.language);
+import {Dropdown, DropdownItem, DropdownMenu} from "semantic-ui-react"
+import CustomIcons from "../CustomIcons";
 
-    const changeLanguage = lang =>{
-        i18n.changeLanguage(lang);
-        setLang(lang)
+const LanguageForm = () => {
+    const {i18n} = useTranslation();
+    const [lang, setLang] = useState(i18n.language);
+
+    const changeLanguage = (e, data) => {
+        console.log(e, data)
+        i18n.changeLanguage(data.value);
+        setLang(data.value)
     };
-    return(
-      <>
-        <Dropdown
-        button
-        onSelect={(lang)=>changeLanguage(lang)}
-        className='icon'
-        floating
-        labeled
-        icon='world'
-        text={"Select Language"}
-        />
 
+    const items = [
+        {
+            key: "ru",
+            value: 'ru',
+            content: (
+                <>
+                    <img src={CustomIcons["ru"]}/>
+                    Russian
+                </>
+            )
+        },
+        {
+            key: "en",
+            value: 'en',
+            content: (
+                <>
+                    <img src={CustomIcons["en"]}/>
+                    English
+                </>
+            )
+        }
+    ];
 
-
-      </>
+    return (
+        <>
+            <Dropdown
+                trigger={(<span style={{display: "flex", alignItems: "center"}}>
+                    <img src={CustomIcons[lang]} style={{marginRight: '10px'}}/> {lang === 'ru' ? 'Russian' : 'English'} </span>)}
+                icon={null} options={items} selection onChange={(e, data) => changeLanguage(e, data)}/>
+        </>
     );
 };
 export default LanguageForm

@@ -4,16 +4,17 @@ import {useHistory} from 'react-router-dom'
 import LanguageForm from "../LanguageForm";
 import {withTranslation} from "react-i18next";
 import ru from "../../images/ru.png";
-import en from "../../images/uk.png";
+import en from "../../images/usa.png";
 import i18next from "i18next";
+
 
 const LoginForm = ({login, t, i18n}) => {
     const history = useHistory();
 
 
     const [formValues, setFormValues] = useState({
-        login: null,
-        password: null,
+        login: "",
+        password: "",
         language: i18n.language
     });
 
@@ -56,7 +57,7 @@ const LoginForm = ({login, t, i18n}) => {
 
     return (
         <>
-
+            <LanguageForm/>
             <div className="Login">
                 <button className="dropdown_button" onClick={clickDropdown} onBlur={onBlur}>
                     <div className="dropdown_lang">
@@ -108,13 +109,12 @@ const LoginForm = ({login, t, i18n}) => {
                                 name="password"
                                 placeholder={t("password")}
                                 value={formValues.password}
-
                                 onChange={onChangeInputHandler} required/>
 
                         </div>
 
 
-                        <button id="signInButton" type="submit">{t("Sing in")}</button>
+                        <button id="signInButton" type="submit">{t("login_btn")}</button>
                     </div>
                 </form>
             </div>

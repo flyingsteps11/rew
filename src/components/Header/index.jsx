@@ -1,70 +1,64 @@
 import React from "react";
-import {Menu,Dropdown} from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
+import {Menu, Dropdown,Segment} from 'semantic-ui-react'
+import {Link, NavLink} from 'react-router-dom'
 import {ORDERS, REFERENCE, SETTING_FIELDS, TARIFFS, TRANSPORTATION} from "../../router/link";
 
 class Header extends React.Component {
-    state={};
+    state={activeItem:'order'};
 
-    handleItemClick = (e, {name}) => this.setState({activeItem: name});
     constructor(props) {
         super(props);
+        this.onClick = this.onClick.bind(this);
     }
+
+    onClick() {
+        this.props.logout(this.props.history);
+    }
+
+    componentDidMount() {
+        this.props.getUserInfo()
+    }
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+
     render() {
-        const {t,history, logout, userName} = this. props;
-        const {activeItem} = this.state;
+        const {t} = this.props;
         return (
-            <>
-                <Menu>
+            <Segment inverted>
+                <Menu inverted poitnting secondary>
                     <Menu.Item
-                        to={ORDERS}
-                        as={Link}
-                        name='orders'
-                        active={activeItem === 'orders'}
+                        name='order'
+                        active={activeItem==='order'}
                         onClick={this.handleItemClick}
-                    >
-                        Заказы
-                    </Menu.Item>
+                    />
                     <Menu.Item
-                        to={TRANSPORTATION}
-                        as={Link}
                         name='transportation'
-                        active={activeItem === 'transportation'}
+                        active={activeItem==='transportation'}
                         onClick={this.handleItemClick}
-                    >
-                        Перевозки
-                    </Menu.Item>
+                    />
                     <Menu.Item
-                        to={TARIFFS}
-                        as={Link}
                         name='tariffs'
-                        active={activeItem === 'tariffs'}
+                        active={activeItem==='tariffs'}
                         onClick={this.handleItemClick}
-                    >
-                        Тарифы
-                    </Menu.Item>
+                    />
                     <Menu.Item
-                        to={SETTING_FIELDS}
-                        as={Link}
-                        name='setting fields'
-                        active={activeItem === 'setting fields'}
+                        name='setting-fields'
+                        active={activeItem==='setting-fields'}
                         onClick={this.handleItemClick}
-                    >
-                        Настройка полей
-                    </Menu.Item>
+                    />
                     <Menu.Item
-                        to={REFERENCE}
-                        as={Link}
-                        name='reference'
-                        active={activeItem === 'reference'}
+                        name='dictionaries'
+                        active={activeItem==='dictionaries'}
                         onClick={this.handleItemClick}
-                    >
-                        Справочники
-                    </Menu.Item>
+                    />
+                    <Menu.Item
+                        name='profile'
+                        active={activeItem==='profile'}
+                        onClick={this.handleItemClick}
+                    />
                 </Menu>
-            </>
+            </Segment>
         )
     }
 }
 
-export default Header;
+export default Header

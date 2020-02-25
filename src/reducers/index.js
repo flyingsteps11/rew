@@ -1,4 +1,5 @@
-import auth from './auth'
+import auth from './auth';
+import userInfo from "./userInfo";
 export default {
-    auth
-}
+    auth , userInfo
+};

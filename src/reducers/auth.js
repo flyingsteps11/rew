@@ -1,6 +1,9 @@
 import actionTypes from '../constants/actionTypes'
+import JwtHelper from "../utils/jwtHelper";
 
-const initialState={};
+const initialState={
+    isAuth: JwtHelper.isTokenExist
+};
 
 export default  function (state = initialState, { type, payload }) {
     switch (type) {
