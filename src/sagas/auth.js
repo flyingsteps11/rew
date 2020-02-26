@@ -20,7 +20,6 @@ function* authorize({payload, history}) {
 
 function* logoutSaga({history}) {
     try {
-        const token = yield JwtHelper.token;
         yield JwtHelper.removeToken();
         yield history.push('/login')
     } catch (error) {
@@ -30,7 +29,7 @@ function* logoutSaga({history}) {
 }
 
 export default function* watchLogin() {
-    yield takeLatest(actionTypes.LOGIN_REQUEST, authorize);
+        yield takeLatest(actionTypes.LOGIN_REQUEST, authorize);
         yield takeLatest(actionTypes.LOGOUT_SUCCESS, logoutSaga)
 }
 

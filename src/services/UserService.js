@@ -15,6 +15,15 @@ class UserService {
     static profileInfo() {
         return requestInst.get('/profile/info');
     }
+    static userRegistration(data) {
+        return requestInstance.post('/identity/registration', data);
+    }
+    static gridOrders(data) {
+        return requestInst.post('/orders/search', data);
+    }
+    static gridShippings(data) {
+        return requestInst.post('/shippings/search', data);
+    }
 }
 
 

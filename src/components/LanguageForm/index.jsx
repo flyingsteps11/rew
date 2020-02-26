@@ -41,7 +41,7 @@ const LanguageForm = () => {
             <Dropdown
                 trigger={(<span style={{display: "flex", alignItems: "center"}}>
                     <img src={CustomIcons[lang]} style={{marginRight: '10px'}}/> {lang === 'ru' ? 'Russian' : 'English'} </span>)}
-                icon={null} options={items} selection onChange={(e, data) => changeLanguage(e, data)}/>
+                icon={null} options={items}  onChange={(e, data) => changeLanguage(e, data)}/>
         </>
     );
 };

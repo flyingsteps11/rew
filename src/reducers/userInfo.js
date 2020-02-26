@@ -1,11 +1,13 @@
  import {USER_INFO_SUCCESS,USER_INFO_REQUEST, USER_INFO_ERROR} from "../actions/userInfo"
 
  const initialState = {
-    userInfo:{},
+    userInfo:{data: {}},
      profile:{},
      appConfig:{
-        grids:[],
-         dictionaries:[]
+        data: {
+            grids:[],
+            dictionaries:[]
+        }
      }
  };
 export  default function (state = initialState, {type, payload}) {

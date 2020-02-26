@@ -10,9 +10,7 @@ import JwtHelper from "../utils/jwtHelper";
 function MyRouter() {
     return(
         <Switch>
-
-            <Route exact path={LOGIN_LINK} component={LoginFormContainer}/>
-            <PrivateRoute path='/' component={HeaderContainer}/>
+            <Route exact path={LOGIN_LINK} render={() => JwtHelper.isTokenExist ? <Redirect to={{pathname: "/grid/orders"}} /> : <LoginFormContainer />}/>
         </Switch>
     );
 }

@@ -7,7 +7,10 @@ import Header from '../components/Header';
 import {withTranslation} from "react-i18next";
 
 const mapStateToProps = state => ({
-    name: selectors.auth.getUserName(state)
+    userName: selectors.userInfo.getUserName(state),
+    grids: selectors.userInfo.getGrids(state),
+    settingFields:selectors.userInfo.getSettingFields(state),
+    dictionaries: selectors.userInfo.getDictionaries(state)
 });
 
 const mapDispatchToProps = dispatch => ({

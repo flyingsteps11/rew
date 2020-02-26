@@ -1,64 +1,119 @@
 import React from "react";
-import {Menu, Dropdown,Segment} from 'semantic-ui-react'
-import {Link, NavLink} from 'react-router-dom'
+import {Menu, Dropdown, Segment} from 'semantic-ui-react';
+import {Link, NavLink} from 'react-router-dom';
 import {ORDERS, REFERENCE, SETTING_FIELDS, TARIFFS, TRANSPORTATION} from "../../router/link";
+import UserBlock from "./UserBlock";
+
 
 class Header extends React.Component {
-    state={activeItem:'order'};
+
 
     constructor(props) {
         super(props);
-        this.onClick = this.onClick.bind(this);
-    }
 
-    onClick() {
-        this.props.logout(this.props.history);
+        this.handleItemClick = this.handleItemClick.bind(this);
+        this.state = {};
+
     }
 
     componentDidMount() {
         this.props.getUserInfo()
     }
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+
+    handleItemClick = (e, {name}) => this.setState({activeItem: name});
 
     render() {
-        const {t} = this.props;
+        const {t, logout,userName, history} = this.props;
+        const {activeItem} = this.state;
         return (
             <Segment inverted>
-                <Menu inverted poitnting secondary>
-                    <Menu.Item
-                        name='order'
-                        active={activeItem==='order'}
-                        onClick={this.handleItemClick}
-                    />
-                    <Menu.Item
-                        name='transportation'
-                        active={activeItem==='transportation'}
-                        onClick={this.handleItemClick}
-                    />
-                    <Menu.Item
-                        name='tariffs'
-                        active={activeItem==='tariffs'}
-                        onClick={this.handleItemClick}
-                    />
-                    <Menu.Item
-                        name='setting-fields'
-                        active={activeItem==='setting-fields'}
-                        onClick={this.handleItemClick}
-                    />
-                    <Menu.Item
-                        name='dictionaries'
-                        active={activeItem==='dictionaries'}
-                        onClick={this.handleItemClick}
-                    />
-                    <Menu.Item
-                        name='profile'
-                        active={activeItem==='profile'}
-                        onClick={this.handleItemClick}
-                    />
+                <Menu inverted pointing secondary activeIndex={1}>
+                    {
+                        this.props.grids.map((grid, index) => {
+                            return (
+                                <Menu.Item
+                                    to={grid.name}
+                                    as={Link}
+                                    name={grid.name}
+                                    key={index}
+                                    active={activeItem === grid.name}
+                                    onClick={this.handleItemClick}
+                                >
+                                    {
+                                        t(grid.name)
+                                    }
+                                </Menu.Item>
+                            );
+                        })
+                    }
+                    {
+                        this.props.dictionaries.map((item, index) => {
+                            return (
+                                item.showOnHeader &&
+                                <Menu.Item
+                                    to={"/tariffs"}
+                                    as={Link}
+                                    name={item.name}
+                                    key={index}
+                                    active={activeItem === item.name}
+                                    onClick={this.handleItemClick}
+                                >
+                                    {
+                                        t(item.name)
+                                    }
+                                </Menu.Item>
+                            );
+                        })
+                    }
+                    {
+                        this.props.settingFields &&
+                        <Menu.Item
+                            to={"/fields_setting"}
+                            as={Link}
+                            name="fields_setting"
+                            active={activeItem === "fields_setting"}
+                            onClick={this.handleItemClick}
+                        >
+                            {
+                                t('fields_setting')
+                            }
+                        </Menu.Item>
+                    }
+                    <Menu.Item>
+                        {
+                            (this.props.dictionaries.length !== 0) &&
+
+                            <Dropdown text={t("dictionaries")}>
+                                <Dropdown.Menu>
+                                    {
+                                        this.props.dictionaries.map((item, index) => {
+                                                return !item.showOnHeader && (
+                                                    <Dropdown.Item
+                                                        key={index}
+                                                    >
+                                                        {
+                                                            t(item.name)
+                                                        }
+                                                    </Dropdown.Item>
+                                                )
+                                            }
+                                        )
+                                    }
+                                </Dropdown.Menu>
+                            </Dropdown>
+
+                        }
+                    </Menu.Item>
+                    <Menu.Menu position='right'>
+                        <UserBlock userName={userName} history={history} logout={logout}/>
+                    </Menu.Menu>
                 </Menu>
             </Segment>
         )
     }
 }
 
+
+
 export default Header
+

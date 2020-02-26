@@ -1,22 +1,26 @@
-import React, {Suspense} from 'react'
+import React, {Fragment, Suspense} from 'react'
 import MyRouter from "./router";
-import {BrowserRouter} from 'react-router-dom';
-import {Provider} from 'react-redux';
-import store from './store';
+import {connect} from "react-redux";
+import Header from "./containers/HeaderContainer";
+import selectors from "./selectors"
 
-import {CubeGrid} from "styled-loaders-react"
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
         return (
-            <Provider store={store}>
-                <BrowserRouter>
-                    <Suspense fallback={<CubeGrid style={{position: "absolute", margin: "0 auto"}} />}>
-                        <MyRouter/>
-                    </Suspense>
-                </BrowserRouter>
-            </Provider>
+            <Fragment>
+                {this.props.isAuth && <Header/>}
+                <MyRouter/>
+            </Fragment>
         )
     }
 }
 
-export default App;
+const mapStateToProps = state => ({
+    isAuth: selectors.auth.isAuth(state),
+    userName:selectors.userInfo.getUserName(state)
+});
+
+export default connect(mapStateToProps)(App);
