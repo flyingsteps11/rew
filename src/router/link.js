@@ -7,3 +7,6 @@ export const TRANSPORTATION='/transportation';
 export const TARIFFS='/tariffs';
 export const SETTING_FIELDS='/setting-fields';
 export const REFERENCE= '/reference';
+
+
+export const GRID_LIST_LINK = "/grid/:name";

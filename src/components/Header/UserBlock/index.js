@@ -8,8 +8,9 @@ const UserBlock = ({userName, logout, history}) => {
         <Dropdown text={userName}>
             <Dropdown.Menu>
                 <Dropdown.Item as="button" onClick={()=>history.push('/profile')}>
-                    Profile
+                     Profile
                 </Dropdown.Item>
+                <Dropdown.Divider />
                 <Dropdown.Item as ="button" onClick={()=>logout(history)}>
                     Log out
                 </Dropdown.Item>

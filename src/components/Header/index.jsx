@@ -3,11 +3,9 @@ import {Menu, Dropdown, Segment} from 'semantic-ui-react';
 import {Link, NavLink} from 'react-router-dom';
 import {ORDERS, REFERENCE, SETTING_FIELDS, TARIFFS, TRANSPORTATION} from "../../router/link";
 import UserBlock from "./UserBlock";
-
+import PropTypes from "prop-types";
 
 class Header extends React.Component {
-
-
     constructor(props) {
         super(props);
 
@@ -23,13 +21,13 @@ class Header extends React.Component {
     handleItemClick = (e, {name}) => this.setState({activeItem: name});
 
     render() {
-        const {t, logout,userName, history} = this.props;
+        const {t, logout,userName, history, grids, settingFields, dictionaries} = this.props;
         const {activeItem} = this.state;
         return (
             <Segment inverted>
                 <Menu inverted pointing secondary activeIndex={1}>
                     {
-                        this.props.grids.map((grid, index) => {
+                        grids.map((grid, index) => {
                             return (
                                 <Menu.Item
                                     to={grid.name}
@@ -47,7 +45,7 @@ class Header extends React.Component {
                         })
                     }
                     {
-                        this.props.dictionaries.map((item, index) => {
+                       dictionaries.map((item, index) => {
                             return (
                                 item.showOnHeader &&
                                 <Menu.Item
@@ -66,7 +64,7 @@ class Header extends React.Component {
                         })
                     }
                     {
-                        this.props.settingFields &&
+                        settingFields &&
                         <Menu.Item
                             to={"/fields_setting"}
                             as={Link}
@@ -81,12 +79,12 @@ class Header extends React.Component {
                     }
                     <Menu.Item>
                         {
-                            (this.props.dictionaries.length !== 0) &&
+                            (dictionaries.length !== 0) &&
 
                             <Dropdown text={t("dictionaries")}>
                                 <Dropdown.Menu>
                                     {
-                                        this.props.dictionaries.map((item, index) => {
+                                        dictionaries.map((item, index) => {
                                                 return !item.showOnHeader && (
                                                     <Dropdown.Item
                                                         key={index}
@@ -101,7 +99,6 @@ class Header extends React.Component {
                                     }
                                 </Dropdown.Menu>
                             </Dropdown>
-
                         }
                     </Menu.Item>
                     <Menu.Menu position='right'>
@@ -113,7 +110,21 @@ class Header extends React.Component {
     }
 }
 
-
+Header.defaultProps = {
+    userName:"",
+    grids:[],
+    settingFields:false,
+    dictionaries:[],
+};
+Header.propTypes = {
+    t: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
+    userName: PropTypes.string,
+    grids: PropTypes.array.isRequired,
+    settingFields: PropTypes.bool.isRequired,
+    dictionaries: PropTypes.array.isRequired
+};
 
 export default Header
 

@@ -1,44 +1,32 @@
-import {call,takeLatest,put} from 'redux-saga/effects'
-import JwtHelper from '../utils/jwtHelper'
-import UserService from "../services/UserService";
+import { call, put, takeLatest } from "redux-saga/effects";
+import JwtHelper from "../utils/jwtHelper";
 import actionTypes from '../constants/actionTypes'
-import actions from '../actions'
+import actions from "../actions";
 import 'regenerator-runtime'
+import { postman } from "../utils/postman";
 
-function* authorize({payload, history}) {
-    try{
-        const { data: { accessToken } } = yield call(() => UserService.userLogin(payload));
+function* loginSaga({ payload, history }) {
+    try {
+        const { accessToken } = yield call(() => postman.post("/identity/login", payload));
         yield JwtHelper.saveTokenToLS(accessToken);
         yield put(actions.LoginSuccess());
-        console.log(history);
-        yield history.push('/')
-
-    }catch (error) {
-        yield put(actions.LoginError(error))
+        yield history.push("/grid/orders");
+    } catch (error) {
+        yield put(actions.LoginError(error));
     }
-}
+};
 
-function* logoutSaga({history}) {
+function* logoutSaga({ history }) {
     try {
         yield JwtHelper.removeToken();
-        yield history.push('/login')
+        yield history.push("/login")
     } catch (error) {
-        console.error(error);
-        yield put(actions.logoutError())
+        yield put(actions.logoutError(error))
     }
 }
 
 export default function* watchLogin() {
-        yield takeLatest(actionTypes.LOGIN_REQUEST, authorize);
+    yield takeLatest(actionTypes.LOGIN_REQUEST, loginSaga);
         yield takeLatest(actionTypes.LOGOUT_SUCCESS, logoutSaga)
+
 }
-
-
-
-
-
-
-
-
-
-
