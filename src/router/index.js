@@ -4,10 +4,10 @@ import {GRID_LIST_LINK, LOGIN_LINK, MAIN_PAGE, ORDERS} from './link';
 
 
 import {LoginFormContainer} from "../containers";
-import HeaderContainer from "../containers/HeaderContainer";
+import HeaderContainer from "../containers/header";
 import PrivateRoute from "./PrivateRoute";
 import JwtHelper from "../utils/jwtHelper";
-import Grids from "../containers/GridContainer";
+import Grids from "../containers/grid";
 function MyRouter() {
     return(
         <Switch>

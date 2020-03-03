@@ -84,3 +84,11 @@ body{
     display: block;
 }
 
+.ui.grid > .row > [class*="one wide"].column{
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+.ui.grid > .row > [class*="four wide"].column, .ui.grid > .column.row > [class*="four wide"].column, .ui.grid > [class*="four wide"].column, .ui.column.grid > [class*="four wide"].column{
+    left: 620px;
+}

@@ -1,7 +1,7 @@
 import React, {Fragment, Suspense} from 'react'
 import MyRouter from "./router";
 import {connect} from "react-redux";
-import Header from "./containers/HeaderContainer";
+import Header from "./containers/header";
 import selectors from "./selectors"
 
 class App extends React.Component {

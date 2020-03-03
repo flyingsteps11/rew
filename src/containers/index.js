@@ -1,3 +1,3 @@
-import LoginFormContainer from "./LoginFormContainer";
+import LoginFormContainer from "./login";
 
 export {LoginFormContainer}

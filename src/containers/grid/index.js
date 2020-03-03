@@ -2,10 +2,25 @@ import React, {Component, Fragment} from 'react';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withTranslation} from "react-i18next";
-import selectors from "../selectors";
-import actions from "../actions";
+import selectors from "../../selectors";
+import actions from "../../actions";
 import {withRouter} from "react-router";
-import {Grid, Dropdown, Divider, Table, Segment, Label, Search, Card, Button, Icon, Menu} from "semantic-ui-react"
+import {
+    Grid,
+    Dropdown,
+    Divider,
+    Table,
+    Segment,
+    Label,
+    Search,
+    Card,
+    Button,
+    Icon,
+    Menu,
+    Statistic
+} from "semantic-ui-react"
+import "../../assets/styles/index.css"
+import RepresentationModal from "./representation";
 
 class Grids extends Component {
     constructor(props) {
@@ -46,12 +61,25 @@ class Grids extends Component {
 
                         </Grid.Column>
                         <Grid.Column>
-                            <Button icon='settings' size="big">
-
+                            <RepresentationModal/>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Statistic.Group horizontal size="mini">
+                                <Statistic >
+                                    <p>Записей:</p>
+                                </Statistic>
+                            </Statistic.Group>
+                        </Grid.Column>
+                        <Grid.Column width="4" floated='right'>
+                            <Button icon="add" size='big'>
+                            </Button>
+                            <Button icon="download" size='big'>
+                            </Button>
+                            <Button icon="filter" size='big'>
                             </Button>
                         </Grid.Column>
                         <Grid.Column floated='right' width={2}>
-                            <Search/>
+                            <Search placeholder='Искать по всем полям'/>
                         </Grid.Column>
 
                     </Grid.Row>

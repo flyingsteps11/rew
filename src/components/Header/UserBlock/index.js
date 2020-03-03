@@ -5,10 +5,10 @@ import {Dropdown} from "semantic-ui-react";
 
 const UserBlock = ({userName, logout, history}) => {
     return (
-        <Dropdown text={userName}>
+        <Dropdown item text={userName}>
             <Dropdown.Menu>
                 <Dropdown.Item as="button" onClick={()=>history.push('/profile')}>
-                     Profile
+                    Profile
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item as ="button" onClick={()=>logout(history)}>
