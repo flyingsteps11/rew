@@ -17,7 +17,8 @@ import {
     Button,
     Icon,
     Menu,
-    Statistic
+    Statistic,
+    Popup
 } from "semantic-ui-react"
 import "../../assets/styles/index.css"
 import RepresentationModal from "./representation";
@@ -25,18 +26,46 @@ import RepresentationModal from "./representation";
 class Grids extends Component {
     constructor(props) {
         super(props);
+
+
         this.state = {
             items: [],
-            totalCount: 0
+            totalCount: 0,
+            isShow: false,
+            isEdit: false,
+            representationName: localStorage.getItem(this.props.match.params.name),
+            isEditDisable: false
         };
+        this.representationHide = this.representationHide.bind(this);
+        this.representationEditShow = this.representationEditShow.bind(this);
+        this.representationCreateShow = this.representationCreateShow.bind(this)
     }
 
     componentDidMount() {
         this.props.getGrids(this.props.match.params.name, 0);
+        this.props.getGridViews(this.props.match.params.name);
     };
 
-    componentDidUpdate() {
-        console.log(this.props)
+
+    representationEditShow() {
+        this.setState({
+            isShow: true,
+            isEdit: true
+        })
+    };
+
+    representationCreateShow(e) {
+        e.nativeEvent.target.preventDefault;
+        this.setState({
+            isShow: true,
+            isEdit: false
+        })
+    };
+
+    representationHide() {
+        this.setState({
+            isShow: false
+        })
     }
 
     render() {
@@ -49,24 +78,37 @@ class Grids extends Component {
                             {t("representation")}
                         </Grid.Column>
                         <Grid.Column width={2}>
-                            <Segment>
-                                <Dropdown>
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item>
-                                            {t("default_representation")}
-                                        </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown>
-                            </Segment>
+                            <Dropdown selection>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item>
+                                        {t("default_representation")}
+                                    </Dropdown.Item>
+                                    {
+                                        this.props.gridViewColumnNames && this.props.gridViewColumnNames.map((viewName, index) => {
+                                            return <Dropdown.Item as="button" key={index}>{viewName}</Dropdown.Item>
+                                        })
+                                    }
+                                    <Divider/>
+                                    <Dropdown.Item onClick={this.representationCreateShow}>
+                                        {t("create_btn")}
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Popup
+                                trigger={<Button className="settings" icon='settings' size="big"
+                                                 disabled={this.state.isEditDisable}
+                                                 onClick={this.representationEditShow}/>}
+                                content={t("customize_representation")}
+                                position="bottom-left"
+                            />
 
                         </Grid.Column>
                         <Grid.Column>
-                            <RepresentationModal/>
-                        </Grid.Column>
-                        <Grid.Column>
                             <Statistic.Group horizontal size="mini">
-                                <Statistic >
-                                    <p>Записей:</p>
+                                <Statistic>
+                                    <p>{t("totalCount")}</p>
                                 </Statistic>
                             </Statistic.Group>
                         </Grid.Column>
@@ -99,6 +141,10 @@ class Grids extends Component {
                         </Table.Row>
                     </Table.Body>
                 </Table>
+                {
+                    this.state.isShow &&
+                    <RepresentationModal open={this.state.isShow} isEdit={this.state.isEdit} onClose={this.representationHide}/>
+                }
             </>
 
         )
@@ -106,10 +152,16 @@ class Grids extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-    gridItems: selectors.userInfo.getGrids(state),
+    grids: selectors.userInfo.getGrids(state),
+    gridViewName: selectors.gridView.getGridViewName(state),
+    defaultColumns: selectors.userInfo.getDefaultColumns(state, props.match.params.name),
+    defaultColumnsNames: selectors.userInfo.getNamesDefaultColumns(state, props.match.params.name),
+    gridViewColumnNames: selectors.gridView.getGridViewColumnNames(state)
+
 });
 const mapDispatchToProps = dispatch => ({
     getGrids: (gridName, gridItemsCount) => dispatch(actions.gridLoadRequest(gridName, gridItemsCount)),
+    getGridViews: (gridName) => dispatch(actions.getGridViewRequest(gridName))
 });
 
 export default compose(

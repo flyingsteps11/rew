@@ -2,8 +2,8 @@ import actionTypes from "../actions";
 
 const initialState = {
     gridViews: {
-        key: null,
-        value: null
+        key: "",
+        value: ""
     },
     errors: false,
     isLoading: false,

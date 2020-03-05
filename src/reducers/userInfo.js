@@ -3,11 +3,8 @@
  const initialState = {
     userInfo:{data: {}},
      profile:{},
-     appConfig:{
-        data: {
-            grids:[],
-            dictionaries:[]
-        }
+     appConfig: {
+        grids: []
      }
  };
 export  default function (state = initialState, {type, payload}) {

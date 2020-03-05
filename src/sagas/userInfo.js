@@ -1,7 +1,6 @@
 import {call, put, takeLatest,fork,join, takeEvery} from 'redux-saga/effects'
 import actions from '../actions'
 import JwtHelper from '../utils/jwtHelper'
-import {USER_INFO_REQUEST} from "../actions/userInfo";
 import {postman, setAccessToken} from "../utils/postman";
 
 function* userInfo() {
@@ -23,5 +22,5 @@ function* userInfo() {
     }
 }
 export default function* watchUserInfo() {
-    yield takeEvery(actions.USER_INFO_REQUEST,userInfo)
+    yield takeEvery(actions.USER_INFO_REQUEST, userInfo)
 }

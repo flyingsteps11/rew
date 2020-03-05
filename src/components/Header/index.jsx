@@ -1,7 +1,6 @@
 import React from "react";
 import {Menu, Dropdown, Segment} from 'semantic-ui-react';
-import {Link, NavLink} from 'react-router-dom';
-import {ORDERS, REFERENCE, SETTING_FIELDS, TARIFFS, TRANSPORTATION} from "../../router/link";
+import {Link} from 'react-router-dom';
 import UserBlock from "./UserBlock";
 import PropTypes from "prop-types";
 
@@ -24,8 +23,8 @@ class Header extends React.Component {
         const {t, logout,userName, history, grids, settingFields, dictionaries} = this.props;
         const {activeItem} = this.state;
         return (
-            <Segment inverted>
-                <Menu inverted pointing secondary>
+            <Segment inverted basic>
+                <Menu inverted secondary>
                     {
                         grids.map((grid, index) => {
                             return (
@@ -101,7 +100,7 @@ class Header extends React.Component {
                             </Dropdown>
                         }
                     </Menu.Item>
-                    <Menu.Menu position='right'>
+                    <Menu.Menu position="right">
                         <UserBlock userName={userName} history={history} logout={logout}/>
                     </Menu.Menu>
                 </Menu>

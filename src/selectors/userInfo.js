@@ -7,7 +7,7 @@ const getSettingFields = state => state.userInfo.appConfig.editFieldProperties;
 const getDictionaries = state => state.userInfo.appConfig.dictionaries;
 
 
-//const getColumns = (state, name) =>state.userInfo.appConfig.grids.filter(grid=>grid.name ===name).map(grid => grid["columns"]).flat();
+const getColumns = (state, name) =>state.userInfo.appConfig.grids.filter(grid=>grid.name ===name).map(grid => grid["columns"]).flat();
 const getDefaultColumns = (state, name) => [].concat(...state.userInfo.appConfig.grids.filter(grid => grid.name === name).map(grid => grid["columns"].filter(column => column.isDefault === true)));
 
 const getNamesDefaultColumns = createSelector(
@@ -15,4 +15,4 @@ const getNamesDefaultColumns = createSelector(
     (items) => items.map(item => item.name)
 );
 
-export {getUserName,getAppConfig,getProfile, getGrids, getDictionaries, getSettingFields,getDefaultColumns,getNamesDefaultColumns}
+export {getUserName, getAppConfig, getProfile, getGrids, getDictionaries, getSettingFields, getDefaultColumns, getNamesDefaultColumns, getColumns}

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Dropdown, DropdownItem, DropdownMenu} from "semantic-ui-react"
+import {Dropdown} from "semantic-ui-react"
 import CustomIcons from "../CustomIcons";
 
 const LanguageForm = () => {
