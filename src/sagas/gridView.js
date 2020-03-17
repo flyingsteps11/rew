@@ -15,13 +15,14 @@ function* getGridViewSaga ({ gridName }) {
     }
 };
 
-function* saveGridViewSaga ({ gridName, gridColumns, viewName }) {
+function* saveGridViewSaga ({ gridName, gridColumns, viewName, representationItems }) {
     try {
 
         const { isError } = yield call(() => postman.post(`/userSettings/${gridName}`, {
             key: gridName,
             value: JSON.stringify({
-                [viewName]: gridColumns
+                [viewName]: gridColumns,
+                    ...representationItems
             })
         }));
         yield put(actions.saveGridViewsSuccess({ errors: isError }));

@@ -22,6 +22,8 @@ import {
 } from "semantic-ui-react"
 import "../../assets/styles/index.css"
 import RepresentationModal from "./representation";
+import {getGrids} from "../../selectors/userInfo";
+import grid from "../../reducers/grid";
 
 class Grids extends Component {
     constructor(props) {
@@ -38,14 +40,41 @@ class Grids extends Component {
         };
         this.representationHide = this.representationHide.bind(this);
         this.representationEditShow = this.representationEditShow.bind(this);
-        this.representationCreateShow = this.representationCreateShow.bind(this)
+        this.representationCreateShow = this.representationCreateShow.bind(this);
+        this.defaultRepresentationName = `${this.props.t("default_representation")}`;
     }
 
     componentDidMount() {
+        const {match} = this.props;
         this.props.getGrids(this.props.match.params.name, 0);
         this.props.getGridViews(this.props.match.params.name);
+        if(!localStorage.getItem(match.params.name)) localStorage.setItem(match.params.name, this.defaultRepresentationName);
+        if(this.state.representationName === this.defaultRepresentationName) {
+            this.setState({
+                isEditDisable: true
+            });
+        } else {
+            this.setState({
+                isEditDisable: false
+            });
+        };
     };
 
+    componentDidUpdate(prevProps, prevState, snapshot){
+        const {match, getGrids,getGridViews,grids} = this.props;
+        if (match.params.name!==prevProps.match.params.name){
+            getGrids(match.params.name, 0);
+            getGridViews(match.params.name);
+
+        }
+        if (grids.totalCount!==prevState.totalCount)
+        {
+            this.setState({
+                totalCount: grids.totalCount,
+                items:grids.items
+            })
+        }
+    }
 
     representationEditShow() {
         this.setState({
@@ -78,7 +107,7 @@ class Grids extends Component {
                             {t("representation")}
                         </Grid.Column>
                         <Grid.Column width={2}>
-                            <Dropdown selection>
+                            <Dropdown selection >
                                 <Dropdown.Menu>
                                     <Dropdown.Item>
                                         {t("default_representation")}
@@ -101,7 +130,7 @@ class Grids extends Component {
                                                  disabled={this.state.isEditDisable}
                                                  onClick={this.representationEditShow}/>}
                                 content={t("customize_representation")}
-                                position="bottom-left"
+                                position="bottom left"
                             />
 
                         </Grid.Column>
